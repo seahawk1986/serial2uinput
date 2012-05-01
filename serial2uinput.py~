@@ -207,7 +207,7 @@ class Options:
     def __init__(self):
         self.parser = OptionParser()
         self.parser.add_option("-l", "--min-gap", dest="min_gap", default=100000, type="int",
-                  help="set minimum gap between repeated keystrokes (default 100000)", metavar="MIN_GAP")
+                  help="set minimum gap between repeated keystrokes (default 150000)", metavar="MIN_GAP")
         self.parser.add_option("-u", "--max-gap", dest="max_gap", default=300000, type="int",
                   help="set maximum gap between repeated keystrokes (default 300000)", metavar="MAX_GAP")
         self.parser.add_option("-r", "--min-repeats", dest="wait_repeats", default=2, type="int",

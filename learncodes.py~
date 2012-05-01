@@ -11,14 +11,11 @@ usedkeys = ['KEY_UP','KEY_DOWN','KEY_LEFT','KEY_RIGHT','KEY_OK','KEY_ESC','KEY_I
     'KEY_EPG','KEY_PVR','KEY_CHANNEL','KEY_MODE','KEY_TIME','KEY_FN']
 for key in usedkeys:
     print "please press", key
-    print "press known key to skip learning a key"
     while 1:
       line = ser.readline()
       try:
         p,a,c,n = line.split()
         if lastkey != (p,a,c):
-            if mykeys["%s_%s_%s"%(p,a[2:],int(c[2:], 16))]:
-                break
             mykeys["%s_%s_%s"%(p,a[2:],int(c[2:], 16))] = key
             lastkey = (p,a,c)
             break
