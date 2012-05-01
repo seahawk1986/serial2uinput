@@ -117,7 +117,8 @@ class Lirc2uinput:
         return keycmd
                
     def keypress(self, key, value):
-        self.device.emit(key, value)
+        if key:
+            self.device.emit(key, value)
         #print "sending", key, value
 
 class main:
@@ -140,7 +141,7 @@ class main:
             
     def listen2socket(self):
         #self.sock.connect(self.socket_path)        
-        ser = serial.Serial('/dev/ttyUSB0', 115200)
+        ser = serial.Serial(self.options.serial_device, 115200)
         #print "connected to ttyUSB0"
         #try:  
         while 1:
@@ -170,7 +171,7 @@ class main:
                             self.currentkey = self.uinputdev.send_key(cmd)
                             if self.lastkey and self.lastkey == self.currentkey:
                                 timeout.cancel()
-                            timeout = Timer(0.2, self.release)
+                            timeout = Timer(0.15, self.release)
                             timeout.start()
                             self.lastkey = self.currentkey
                         except KeyError:
@@ -215,7 +216,7 @@ class Options:
         self.parser.add_option("-a", "--acceleration", dest="acceleration", default=0.25, type="float",
                   help="acceleration to get from MAX_GAP to MIN_GAP. default value of 0.25 equals 4 repeated keystrokes to reach maximum speed",
                     metavar="ACCELERATION")
-        self.parser.add_option("-s", "--serial-device", dest="serial_device", default=None,
+        self.parser.add_option("-s", "--serial-device", dest="serial_device", default="/dev/ttyUSB0",
                   help="choose lircd socket to listen on", metavar="LIRCD_SOCKET")
         self.parser.add_option("-d", "--debug", dest="debug", action="store_true",
                   help='enable debug mode')
